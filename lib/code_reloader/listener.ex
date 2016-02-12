@@ -22,10 +22,8 @@ defmodule CodeReloader.Listener do
       {:ok, command} ->
         case (command |> String.strip |> exec) do
           :ok ->
-            Logger.debug "Executing #{command} command"
             write_line("ok", socket)
           :error ->
-            Logger.debug "Ignoring unknown #{command} command"
             write_line("unknown command\r\n", socket)
         end
         serve(socket)
