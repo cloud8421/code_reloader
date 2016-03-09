@@ -9,7 +9,7 @@ defmodule CodeReloader do
     children = [
       # Define workers and child supervisors to be supervised
       supervisor(Task.Supervisor, [[name: CodeReloader.TaskSupervisor]]),
-      worker(Task, [CodeReloader.Listener, :accept, [port]]),
+      worker(Task, [CodeReloader.Listener, :accept, [port, callbacks]]),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -20,5 +20,9 @@ defmodule CodeReloader do
 
   defp port do
     Application.get_env(:code_reloader, :port, 9999)
+  end
+
+  defp callbacks do
+    Application.get_env(:code_reloader, :callbacks, CodeReloader.DefaultCallbacks)
   end
 end

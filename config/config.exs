@@ -3,7 +3,8 @@
 use Mix.Config
 
 config :code_reloader,
-  port: 9999
+  port: 9999,
+  callbacks: CodeReloader.DefaultCallbacks
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
