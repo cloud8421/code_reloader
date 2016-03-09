@@ -36,3 +36,29 @@ This package can be installed via:
 Once up, you can send tcp commands to the istance, for example with [nmap](https://nmap.org/).
 
     $ echo "recompile" | ncat localhost 9999
+
+## Custom recompile
+
+In some instances, for example when using cowboy and ranch, the default recompile task may fail.
+
+In that case you can override the default behaviour by:
+
+  1. Defining a custom callbacks module
+
+      ```elixir
+      defmodule MyCallbacks do
+        use CodeReloader.Callbacks
+
+        def recompile do
+          Application.stop(:cowboy)
+          Application.stop(:ranch)
+          super
+        end
+      end
+      ```
+
+  2. Add it to the configuration:
+
+        config :code_reloader,
+          port: 9999,
+          callbacks_module: MyCallbacks
